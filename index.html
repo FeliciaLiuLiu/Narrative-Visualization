@@ -89,7 +89,7 @@
 				
 		// Create an SVG to place scatterplot on for data
                 // Convert string to integer using '+' notation on the data element
-                d3.select("svg")
+                var svg =d3.select("svg")
                         .append("g")
                         .attr("transform", "translate("+svgMargin+","+svgMargin+")")
                         .selectAll('scatter-dots')
@@ -153,7 +153,7 @@
 				xAxis.transition().duration(1000).call(d3.axisBottom(cxs))
 
 				// Update chart
-				d3.select("svg").selectAll("circle")
+				svg.selectAll("circle")
 				.data(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
 				.attr("cx", function(d) {return cxs(+d.year);})
                             	.attr("cy", function(d) {return cys(+d.value);})
