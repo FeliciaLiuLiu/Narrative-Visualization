@@ -112,7 +112,7 @@
 				  .attr("transform","translate("+svgMargin+","+svgMargin+")")
 				  .call(d3.axisLeft(cys)
 						  .tickValues([-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7])
-						  .tickFormat(d3.format(".1f")));
+						  .tickFormat(d3.format(".0f")));
 
 				// create x-axis
 				d3.select("svg").append("g")
