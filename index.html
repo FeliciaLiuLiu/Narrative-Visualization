@@ -154,7 +154,7 @@
 
 				// Update chart
 				svg.selectAll("circle")
-				.data(data)
+				.data(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
 				.transition()
 				.duration(1000)
 				.attr("cx", function(d) {return cxs(+d.year);})
