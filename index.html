@@ -8,14 +8,14 @@
     </head>
     
     <body onload='init()'>
-        <h1 class="main-header">World GAP Growth Rate From 1961 To 2021</h1>
+        <h1 class="main-header">World GAP Growth Percentage (1961-2021)</h1>
 		<h3 class="main-header"> Data source: https://www.macrotrends.net/countries/WLD/world/gdp-growth-rate</h3>
         <div class="main-buttons">
             <button onclick='moveStateBack()'><</button>
             <button id="1" onclick='changeToState(1)'>1961-1980</button>
             <button id="2" onclick='changeToState(2)'>1981-2000</button>
             <button id="3" onclick='changeToState(3)'>2001-2021</button>
-            <button id="4" onclick='changeToState(4)'>All Years</button>
+            <button id="4" onclick='changeToState(4)'>All Years (1961-2021)</button>
             <button onclick='moveStateForward()'>></button>
         </div>
 		<h2 id="infoHeader" class="svg-header"></h2>
@@ -58,7 +58,7 @@
 			
 			// Populate the SVG with the given parameters - executed from main buttons
 			function changeToState(newstate) {
-				// Change State and clear SVG
+				// Change State to a new Sate and clear SVG
 				state = newstate;
 				clearme();
 				
@@ -80,32 +80,33 @@
 			
 			function drawSVG(bottom, top) {
 				// Variables for the method
-                svgWidth = 800;
-                svgHeight = 800;
+                svgWidth = 500;
+                svgHeight = 500;
                 svgMargin = 50;
                 cxs = d3.scaleLinear().domain([1961,2021]).range([0,svgWidth]);
                 cys = d3.scaleLinear().domain([-7,7]).range([svgHeight,0]);
 				
-				// Create an SVG to place scatterplot on for data
-                // convert string to integer using '+' notation on the data element
+		// Create an SVG to place scatterplot on for data
+                // Convert string to integer using '+' notation on the data element
                 d3.select("svg")
                         .append("g")
                         .attr("transform", "translate("+svgMargin+","+svgMargin+")")
                         .selectAll('scatter-dots')
+			// For each scene, the values should be within the bottom and top defined
 			.data(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
 			.enter()
 			.append('circle')
                             .attr("cx", function(d) {return cxs(+d.year);})
                             .attr("cy", function(d) {return cys(+d.value);})
                             .attr("r", 5)
-			    .attr("fill", "purple")
+			    .attr("fill", "red")
 						.on("mouseover", function(d) {
 							d3.select('#tooltip').transition().duration(200)
 								.style('opacity', 1);
 							d3.select('#tooltip')
 								.style("left", (d3.event.pageX) + "px")             
 								.style("top", (d3.event.pageY - 50) + "px")
-								.html("Year: " + d.year + "<br/>" + "Deviation(C): " + d.value);
+								.html("Year: " + d.year + "<br/>" + "World GDP Growth %: " + d.value);
 						});
 				
 				// create y-axis
@@ -127,7 +128,7 @@
 				  .attr("class", "xlabel")
 				  .attr("text-anchor", "end")
 				  .attr("x", (svgWidth/2) + svgMargin)
-				  .attr("y", svgHeight + svgMargin + 35)
+				  .attr("y", svgHeight + svgMargin + 25)
 				  .text("Year");
 				
 				// create y-axis label
@@ -144,10 +145,10 @@
 				const tooltip_annot = [
 					{
 					  note: {
-						label: "Mouse over any data point for data values",
-						title: "Explore The Data"
+						label: "Check data values by pointing to the data points",
+						title: "Explore Data Points"
 					  },
-					  x: 100,
+					  x: -100,
 					  y: svgMargin,
 					}
 				]
