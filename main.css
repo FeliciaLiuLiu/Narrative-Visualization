@@ -1,0 +1,39 @@
+h1 {
+  text-align: center;
+  color: black;
+  font: Arial, sans-serif;
+}
+circle {
+  fill: lightblue;
+  stroke: black;
+}
+#tooltip {
+  background-color: blue;
+  font: Arial, sans-serif;
+  padding: 3px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 8px;
+}
+.main-header {
+  text-align: center;
+  color: black;
+  font: Arial, sans-serif;
+  padding-bottom: 0px;
+}
+.main-buttons {
+  text-align: center;
+  font: Arial, sans-serif;
+}
+.main-svg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 600px;
+  height: 600px;
+}
+.svg-header {
+  text-align: center;
+  color: black;
+  font: Arial, sans-serif;
+}
