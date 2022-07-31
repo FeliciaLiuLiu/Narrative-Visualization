@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-	<input type="number" id="buttonXlim" value=9>
+	<input type="number" id="buttonXlim" value=2021>
         <script src='https://d3js.org/d3.v5.min.js'></script>
 		<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/main.css" />
@@ -149,7 +149,7 @@
 				xlim = this.value
 
 				// Update X axis
-				cxs.domain([3,xlim])
+				cxs.domain([1961,xlim])
 				xAxis.transition().duration(1000).call(d3.axisBottom(cxs))
 
 				// Update chart
