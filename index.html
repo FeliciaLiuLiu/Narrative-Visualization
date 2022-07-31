@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src='https://d3js.org/d3.v5.min.js'></script>
+		<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/main.css" />
+    </head>
+    
+    <body onload='init()'>
+        <h1 class="main-header">World Average Temperature From Mean (C), 1880-2020</h1>
+		<h3 class="main-header"> Data sourced from https://www.ncdc.noaa.gov/cag/global/time-series</h3>
+        <div class="main-buttons">
+            <button onclick='moveStateBack()'><</button>
+            <button id="1" onclick='changeToState(1)'>1880-1920</button>
+            <button id="2" onclick='changeToState(2)'>1921-1980</button>
+            <button id="3" onclick='changeToState(3)'>1981-2020</button>
+            <button id="4" onclick='changeToState(4)'>All Years</button>
+            <button onclick='moveStateForward()'>></button>
+        </div>
+		<h2 id="infoHeader" class="svg-header"></h2>
+        <svg class="main-svg"></svg>
+		<script>
+			// Global variables
+			var state = 0; // State of the visualization
+			var data;	   // Container for Dataset
+			
+			
+            async function init() {
+                // get data and wait for result  
+                data = await d3.csv("global_air_ocean_temp_deviation.csv");
+				
+				// create a tooltip
+				d3.select('body')
+					.append('div')
+					.attr('id', 'tooltip')
+					.attr('style', 'position: absolute; opacity: 0;');
+				
+				changeToState(1);
+            }
+			
+			// Invoked when back button is pressed
+			function moveStateBack() {
+				if (state > 1) {
+					state = state - 1;
+					changeToState(state);
+				}
+			}
+			
+			// Invoked when forward button is pressed
+			function moveStateForward() {
+				if (state < 4) {
+					state = state + 1;
+					changeToState(state);
+				}
+			}
+			
+			// Populate the SVG with the given parameters - executed from main buttons
+			function changeToState(newstate) {
+				// Change State and clear SVG
+				state = newstate;
+				clearme();
+				
+				// Get the state for the filter ranges, execute associated method
+				if (state == 1) {
+					d3.select('#infoHeader').text("Years 1880-1920");
+					drawSVG(1880,1920);
+				} else if (state == 2) {
+					d3.select('#infoHeader').text("Years 1921-1980");
+					drawSVG(1921,1980);
+				} else if (state == 3) {
+					d3.select('#infoHeader').text("Years 1981-2020");
+					drawSVG(1981,2020);
+				} else if (state == 4) {
+					d3.select('#infoHeader').text("All recorded years (1880-2020) ");
+					drawSVG(1880,2020);
+				}
+			}
+			
+			function drawSVG(bottom, top) {
+				// Variables for the method
+                svgWidth = 500;
+                svgHeight = 500;
+                svgMargin = 50;
+                cxs = d3.scaleLinear().domain([1880,2020]).range([0,svgWidth]);
+                cys = d3.scaleLinear().domain([-2,2]).range([svgHeight,0]);
+				
+				// Create an SVG to place scatterplot on for data
+                // convert string to integer using '+' notation on the data element
+                d3.select("svg")
+                        .append("g")
+                        .attr("transform", "translate("+svgMargin+","+svgMargin+")")
+                        .selectAll().data(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);})).enter().append("circle")
+                            .attr("cx", function(d) {return cxs(+d.year);})
+                            .attr("cy", function(d) {return cys(+d.value);})
+                            .attr("r", 5)
+						.on("mouseover", function(d) {
+							d3.select('#tooltip').transition().duration(200)
+								.style('opacity', 1);
+							d3.select('#tooltip')
+								.style("left", (d3.event.pageX) + "px")             
+								.style("top", (d3.event.pageY - 50) + "px")
+								.html("Year: " + d.year + "<br/>" + "Deviation(C): " + d.value);
+						});
+				
+				// create y-axis
+				d3.select("svg").append("g")
+				  .attr("transform","translate("+svgMargin+","+svgMargin+")")
+				  .call(d3.axisLeft(cys)
+						  .tickValues([-1.5, -1, -.5, 0, .5, 1, 1.5])
+						  .tickFormat(d3.format(".1f")));
+
+				// create x-axis
+				d3.select("svg").append("g")
+				  .attr("transform","translate("+svgMargin+","+(svgHeight+svgMargin)+")")
+				  .call(d3.axisBottom(cxs)
+						  .tickValues([1880,1900,1920,1940,1960,1980,2000,2020])
+						  .tickFormat(d3.format(".0f")));
+						  
+				// create x-axis labels
+				d3.select("svg").append("text")
+				  .attr("class", "xlabel")
+				  .attr("text-anchor", "end")
+				  .attr("x", (svgWidth/2) + svgMargin)
+				  .attr("y", svgHeight + svgMargin + 35)
+				  .text("Year");
+				
+				// create y-axis label
+				d3.select("svg").append("text")
+				  .attr("class", "ylabel")
+				  .attr("text-anchor", "end")
+				  .attr("y", 6)
+				  .attr("x", -225)
+				  .attr("dy", ".75em")
+				  .attr("transform", "rotate(-90)")
+				  .text("Deviation from Average in Celcius");  
+				  
+				// Create Annotations
+				const tooltip_annot = [
+					{
+					  note: {
+						label: "Mouse over any data point for data values",
+						title: "Explore The Data"
+					  },
+					  x: 100,
+					  y: svgMargin,
+					}
+				]
+				
+				const sceneOne_annot = [
+					{
+					  note: {
+						label: "Temperature tracking began by NOAA in 1880, a time marked by infrequent temperature variations",
+						title: "Climate Tracking"
+					  },
+					  x: 250,
+					  y: 300,
+					}
+				]
+				
+				const sceneTwo_annot = [
+					{
+					  note: {
+						label: "1921-1980 was characterized by more frequent warm years, with the last negative deviation occuring in 1976",
+						title: "End of Negative Deviations"
+					  },
+					  x: 300,
+					  y: 350,
+					}
+				]
+				
+				const sceneThree_annot = [
+					{
+					  note: {
+						label: "Five of the warmest recorded years have occured in the past five years",
+						title: "Warming Temperatures"
+					  },
+					  x: 375,
+					  y: 50,
+					}
+				]
+				
+				const sceneFour_annot = [
+					{
+					  note: {
+						label: "Temperature readings have been above average in the past 20 years",
+						title: "A Warmer Climate"
+					  },
+					  x: 400,
+					  y: 350,
+					}
+				]
+				
+				// permanent annotation
+				d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
+				
+				// Get the state for the filter ranges, execute associated method
+				if (state == 1) {
+					d3.select("svg").append("g").call(d3.annotation().annotations(sceneOne_annot))
+				} else if (state == 2) {
+					d3.select("svg").append("g").call(d3.annotation().annotations(sceneTwo_annot))
+				} else if (state == 3) {
+					d3.select("svg").append("g").call(d3.annotation().annotations(sceneThree_annot))
+				} else if (state == 4) {
+					d3.select("svg").append("g").call(d3.annotation().annotations(sceneFour_annot))
+				}
+				  
+				d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
+			}
+			
+			// Function to clear the svg from the page and hide tooltip. This will not remove the svg
+			function clearme() {
+				d3.selectAll("svg > *").remove();
+				d3.select('#tooltip').style('opacity', 0);
+			}
+        </script>
+    </body>
+</html>
