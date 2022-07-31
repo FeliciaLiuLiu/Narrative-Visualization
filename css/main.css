@@ -4,7 +4,7 @@ h1 {
   font: Arial, sans-serif;
 }
 circle {
-  fill: lightblue;
+  fill: steelblue;
   stroke: black;
 }
 #tooltip {
@@ -29,8 +29,8 @@ circle {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 600px;
-  height: 600px;
+  width: 1100px;
+  height: 1100px;
 }
 .svg-header {
   text-align: center;
