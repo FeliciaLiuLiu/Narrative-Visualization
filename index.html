@@ -84,7 +84,7 @@
                 svgHeight = 300;
                 svgMargin = 50;
                 cxs = d3.scaleLinear().domain([1961,2021]).range([0,svgWidth]);
-                cys = d3.scaleLinear().domain([-2,2]).range([svgHeight,0]);
+                cys = d3.scaleLinear().domain([-7,7]).range([svgHeight,0]);
 				
 				// Create an SVG to place scatterplot on for data
                 // convert string to integer using '+' notation on the data element
@@ -108,7 +108,7 @@
 				d3.select("svg").append("g")
 				  .attr("transform","translate("+svgMargin+","+svgMargin+")")
 				  .call(d3.axisLeft(cys)
-						  .tickValues([-1.5, -1, -.5, 0, .5, 1, 1.5])
+						  .tickValues([-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7])
 						  .tickFormat(d3.format(".1f")));
 
 				// create x-axis
