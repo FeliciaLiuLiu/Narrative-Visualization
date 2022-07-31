@@ -19,7 +19,7 @@
             <button onclick='moveStateForward()'>></button>
         </div>
 		<h2 id="infoHeader" class="svg-header"></h2>
-        <svg class="main-svg", width = 1000, height = 1000></svg>
+        <svg class="main-svg"></svg>
 		<script>
 			// Create variable state of the visualization
 			var state = 0; 
@@ -80,8 +80,8 @@
 			
 			function drawSVG(bottom, top) {
 				// Variables for the method
-                svgWidth = 1000;
-                svgHeight = 1000;
+                svgWidth = 500;
+                svgHeight = 500;
                 svgMargin = 50;
                 cxs = d3.scaleLinear().domain([1961,2021]).range([0,svgWidth]);
                 cys = d3.scaleLinear().domain([-7,7]).range([svgHeight,0]);
