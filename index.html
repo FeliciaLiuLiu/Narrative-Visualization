@@ -83,7 +83,7 @@
                 svgWidth = 300;
                 svgHeight = 300;
                 svgMargin = 50;
-                cxs = d3.scaleLinear().domain([1961,2021]).range([0,svgWidth]);
+                cxs = d3.scaleLinear().domain([1961-12-31,2021-12-31]).range([0,svgWidth]);
                 cys = d3.scaleLinear().domain([-10,10]).range([svgHeight,0]);
 				
 				// Create an SVG to place scatterplot on for data
