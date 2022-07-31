@@ -128,14 +128,14 @@
 				  .attr("class", "xlabel")
 				  .attr("text-anchor", "end")
 				  .attr("x", (svgWidth/2) + svgMargin)
-				  .attr("y", svgHeight + svgMargin + 25)
+				  .attr("y", svgHeight + svgMargin + 35)
 				  .text("Year");
 				
 				// create y-axis label
 				d3.select("svg").append("text")
 				  .attr("class", "ylabel")
 				  .attr("text-anchor", "end")
-				  .attr("y", 6)
+				  .attr("y", 5)
 				  .attr("x", -225)
 				  .attr("dy", ".75em")
 				  .attr("transform", "rotate(-90)")
@@ -168,7 +168,7 @@
 					{
 					  note: {
 						label: "From 1981 to 2000, the economy growth rate is not as high as before, but the world GDP growth rate is still increaseing per year",
-						title: "The Speed Of Economy Growth Slowed Down"
+						title: "The Speed Of World Economy Growth Slowed Down"
 					  },
 					  x: 400,
 					  y: 200,
@@ -193,7 +193,7 @@
 						title: "The World GDP Growth Rate Change From 1961 To 2021"
 					  },
 					  x: 400,
-					  y: 200,
+					  y: 300,
 					}
 				]
 				
