@@ -98,7 +98,7 @@
                             .attr("cx", function(d) {return cxs(+d.year);})
                             .attr("cy", function(d) {return cys(+d.value);})
                             .attr("r", 4)
-			    .attr("fill", "steelblue")
+			    .attr("fill", "blue")
 						.on("mouseover", function(d) {
 							d3.select('#tooltip').transition().duration(200)
 								.style('opacity', 1);
@@ -112,7 +112,7 @@
 				d3.select("svg").append("g")
 				  .attr("transform","translate("+svgMargin+","+svgMargin+")")
 				  .call(d3.axisLeft(cys)
-						  .tickValues([-7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7])
+						  .tickValues([-7,-6,-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7])
 						  .tickFormat(d3.format(".1f")));
 
 				// create x-axis
@@ -138,7 +138,7 @@
 				  .attr("x", -225)
 				  .attr("dy", ".75em")
 				  .attr("transform", "rotate(-90)")
-				  .text("Deviation from Average in Celcius");  
+				  .text("The World GDP Growth Percentage");  
 				  
 				// Create Annotations
 				const tooltip_annot = [
@@ -181,7 +181,7 @@
 						title: "For Certain Years, The World GDP Growth Rate Is Negative"
 					  },
 					  x: 375,
-					  y: 50,
+					  y: 300,
 					}
 				]
 				
@@ -191,7 +191,7 @@
 						label: "Generally, the world GDP growth rate remains around 3% - 5% increase rate every year",
 						title: "The World GDP Growth Rate Change From 1961 To 2021"
 					  },
-					  x: 400,
+					  x: 300,
 					  y: 350,
 					}
 				]
