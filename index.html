@@ -2,7 +2,6 @@
 <html>
     <head>
         <meta charset="utf-8">
-	<input type="number" id="buttonXlim" value=2021>
         <script src='https://d3js.org/d3.v5.min.js'></script>
 		<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
         <link rel="stylesheet" type="text/css" href="css/main.css" />
@@ -89,7 +88,7 @@
 				
 		// Create an SVG to place scatterplot on for data
                 // Convert string to integer using '+' notation on the data element
-                var svg =d3.select("svg")
+               d3.select("svg")
                         .append("g")
                         .attr("transform", "translate("+svgMargin+","+svgMargin+")")
                         .selectAll('scatter-dots')
