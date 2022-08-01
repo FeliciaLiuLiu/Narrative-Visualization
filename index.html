@@ -51,7 +51,7 @@
 				
 				// Create function moveStateForward to invoke when forward button is pressed
 				function moveStateForward() {
-					if (state < 4) {
+					if (state < 5) {
 						state = state + 1;
 						changeToState(state);
 					}
@@ -74,6 +74,9 @@
 						d3.select('#infoHeader').text("Years 2001-2021");
 						drawSVG(2001,2021);
 					} else if (state == 4) {
+						d3.select('#infoHeader').text("All years (1961-2021) ");
+						drawSVG(1961,2021);
+					}else if (state == 5) {
 						d3.select('#infoHeader').text("All years (1961-2021) ");
 						drawSVG(1961,2021);
 					}
