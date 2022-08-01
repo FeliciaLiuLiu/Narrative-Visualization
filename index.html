@@ -119,8 +119,8 @@
 				      .attr("stroke-width", 1.5)
 				      .attr("d", d3.line()
 					.curve(d3.curveBasis) 
-					.x(function(d) { return x(+d.year) })
-					.y(function(d) { return y(+d.value) })
+					.cxs(function(d) { return cxs(+d.year) })
+					.cys(function(d) { return cys(+d.value) })
 					)
 					
 					// create y-axis
