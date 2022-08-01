@@ -16,7 +16,6 @@
 	            <button id="2" onclick='changeToState(2)'>1981-2000</button>
 	            <button id="3" onclick='changeToState(3)'>2001-2021</button>
 	            <button id="4" onclick='changeToState(4)'>All Years (1961-2021)</button>
-		    <button id="5" onclick='changeToState(5)'>All Years - Connected Scatterplot (1961-2021)</button>
 	            <button onclick='moveStateForward()'>></button>
 	        </div>
 			<h2 id="infoHeader" class="svg-header"></h2>
@@ -51,7 +50,7 @@
 				
 				// Create function moveStateForward to invoke when forward button is pressed
 				function moveStateForward() {
-					if (state < 5) {
+					if (state < 4) {
 						state = state + 1;
 						changeToState(state);
 					}
@@ -74,9 +73,6 @@
 						d3.select('#infoHeader').text("Years 2001-2021");
 						drawSVG(2001,2021);
 					} else if (state == 4) {
-						d3.select('#infoHeader').text("All years (1961-2021) ");
-						drawSVG(1961,2021);
-					}else if (state == 5) {
 						d3.select('#infoHeader').text("All years (1961-2021) ");
 						drawSVG(1961,2021);
 					}
@@ -112,16 +108,6 @@
 									.style("top", (d3.event.pageY - 50) + "px")
 									.html("Year: " + d.year + "<br/>" + "World GDP Growth %: " + d.value);
 							});
-				d3.select("svg").append("path")
-				      .datum(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
-				      .attr("fill", "none")
-				      .attr("stroke", "black")
-				      .attr("stroke-width", 1.5)
-				      .attr("d", d3.line()
-					.curve(d3.curveBasis) 
-					.cxs(function(d) { return cxs(+d.year) })
-					.cys(function(d) { return cys(+d.value) })
-					)
 					
 					// create y-axis
 					d3.select("svg").append("g")
@@ -155,9 +141,7 @@
 					  .attr("dy", ".75em")
 					  .attr("transform", "rotate(-90)")
 					  .text("The World GDP Growth Percentage");  
-					
-				       
-					
+					  
 					// Create Annotations
 					const tooltip_annot = [
 						{
@@ -214,17 +198,6 @@
 						}
 					]
 					
-					const sceneFive_annot = [
-						{
-						  note: {
-							label: "Generally, the world GDP growth rate remains around 3% - 5% increase rate every year",
-							title: "The World GDP Growth Rate Change From 1961 To 2021"
-						  },
-						  x: 400,
-						  y: 300,
-						}
-					]
-					
 					// permanent annotation
 					d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
 					
@@ -237,8 +210,6 @@
 						d3.select("svg").append("g").call(d3.annotation().annotations(sceneThree_annot))
 					} else if (state == 4) {
 						d3.select("svg").append("g").call(d3.annotation().annotations(sceneFour_annot))
-					}else if (state == 5) {
-						d3.select("svg").append("g").call(d3.annotation().annotations(sceneFive_annot))
 					}
 					  
 					d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
