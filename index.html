@@ -201,16 +201,7 @@
 					  y: 300,
 					}
 				]
-				const sceneFive_annot = [
-					{
-					  note: {
-						label: "Generally, the world GDP growth rate remains around 3% - 5% increase rate every year",
-						title: "The World GDP Growth Rate Change From 1961 To 2021"
-					  },
-					  x: 400,
-					  y: 300,
-					}
-				]
+				
 				
 				// permanent annotation
 				d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
@@ -223,8 +214,6 @@
 				} else if (state == 3) {
 					d3.select("svg").append("g").call(d3.annotation().annotations(sceneThree_annot))
 				} else if (state == 4) {
-					d3.select("svg").append("g").call(d3.annotation().annotations(sceneFour_annot))
-				} else if (state == 5) {
 					d3.select("svg").append("g").call(d3.annotation().annotations(sceneFour_annot))
 				  
 				d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
