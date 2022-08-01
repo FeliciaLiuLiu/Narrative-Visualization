@@ -112,6 +112,16 @@
 									.style("top", (d3.event.pageY - 50) + "px")
 									.html("Year: " + d.year + "<br/>" + "World GDP Growth %: " + d.value);
 							});
+				.append("path")
+				      .datum(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
+				      .attr("fill", "none")
+				      .attr("stroke", "black")
+				      .attr("stroke-width", 1.5)
+				      .attr("d", d3.line()
+					.curve(d3.curveBasis) 
+					.x(function(d) { return x(+d.year) })
+					.y(function(d) { return y(+d.value) })
+					)
 					
 					// create y-axis
 					d3.select("svg").append("g")
@@ -146,16 +156,7 @@
 					  .attr("transform", "rotate(-90)")
 					  .text("The World GDP Growth Percentage");  
 					
-				       d3.select("svg").append("path")
-				      .datum(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
-				      .attr("fill", "none")
-				      .attr("stroke", "black")
-				      .attr("stroke-width", 1.5)
-				      .attr("d", d3.line()
-					.curve(d3.curveBasis) 
-					.x(function(d) { return x(+d.year) })
-					.y(function(d) { return y(+d.value) })
-					)
+				       
 					
 					// Create Annotations
 					const tooltip_annot = [
