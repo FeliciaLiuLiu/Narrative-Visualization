@@ -112,7 +112,7 @@
 									.style("top", (d3.event.pageY - 50) + "px")
 									.html("Year: " + d.year + "<br/>" + "World GDP Growth %: " + d.value);
 							});
-				.append("path")
+				d3.select("svg").append("path")
 				      .datum(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
 				      .attr("fill", "none")
 				      .attr("stroke", "black")
