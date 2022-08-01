@@ -1,225 +1,225 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <script src='https://d3js.org/d3.v5.min.js'></script>
-		<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/main.css" />
-    </head>
-    
-    <body onload='init()'>
-        <h1 class="main-header">World GDP Growth Percentage (1961-2021)</h1>
-		<h3 class="main-header"> Data source: https://www.macrotrends.net/countries/WLD/world/gdp-growth-rate</h3>
-        <div class="main-buttons">
-            <button onclick='moveStateBack()'><</button>
-            <button id="1" onclick='changeToState(1)'>1961-1980</button>
-            <button id="2" onclick='changeToState(2)'>1981-2000</button>
-            <button id="3" onclick='changeToState(3)'>2001-2021</button>
-            <button id="4" onclick='changeToState(4)'>All Years (1961-2021)</button>
-            <button onclick='moveStateForward()'>></button>
-        </div>
-		<h2 id="infoHeader" class="svg-header"></h2>
-        <svg class="main-svg"></svg>
-		<script>
-			// Create variable state of the visualization
-			var state = 0; 
-			// Create variable data as the container for Dataset
-			var data;
-			
-	    // asyn and await function	
-            async function init() {
-                // import the csv dataset  
-                data = await d3.csv("world_gdp_growth_rate.csv");
+	<html>
+	    <head>
+	        <meta charset="utf-8">
+	        <script src='https://d3js.org/d3.v5.min.js'></script>
+			<script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
+	        <link rel="stylesheet" type="text/css" href="css/main.css" />
+	    </head>
+	    
+	    <body onload='init()'>
+	        <h1 class="main-header">World GAP Growth Percentage (1961-2021)</h1>
+			<h3 class="main-header"> Data source: https://www.macrotrends.net/countries/WLD/world/gdp-growth-rate</h3>
+	        <div class="main-buttons">
+	            <button onclick='moveStateBack()'><</button>
+	            <button id="1" onclick='changeToState(1)'>1961-1980</button>
+	            <button id="2" onclick='changeToState(2)'>1981-2000</button>
+	            <button id="3" onclick='changeToState(3)'>2001-2021</button>
+	            <button id="4" onclick='changeToState(4)'>All Years (1961-2021)</button>
+	            <button onclick='moveStateForward()'>></button>
+	        </div>
+			<h2 id="infoHeader" class="svg-header"></h2>
+	        <svg class="main-svg"></svg>
+			<script>
+				// Create variable state of the visualization
+				var state = 0; 
+				// Create variable data as the container for Dataset
+				var data;
 				
-				// create a tooltip
-				d3.select('body')
-					.append('div')
-					.attr('id', 'tooltip')
-					.attr('style', 'position: absolute; opacity: 0;');
+		    // asyn and await function	
+	            async function init() {
+	                // import the csv dataset  
+	                data = await d3.csv("world_gdp_growth_rate.csv");
+					
+					// create a tooltip
+					d3.select('body')
+						.append('div')
+						.attr('id', 'tooltip')
+						.attr('style', 'position: absolute; opacity: 0;');
+					
+					changeToState(1);
+	            }
 				
-				changeToState(1);
-            }
-			
-			// Create function moveStateBack to invoke when back button is pressed
-			function moveStateBack() {
-				if (state > 1) {
-					state = state - 1;
-					changeToState(state);
+				// Create function moveStateBack to invoke when back button is pressed
+				function moveStateBack() {
+					if (state > 1) {
+						state = state - 1;
+						changeToState(state);
+					}
 				}
-			}
-			
-			// Create function moveStateForward to invoke when forward button is pressed
-			function moveStateForward() {
-				if (state < 4) {
-					state = state + 1;
-					changeToState(state);
+				
+				// Create function moveStateForward to invoke when forward button is pressed
+				function moveStateForward() {
+					if (state < 4) {
+						state = state + 1;
+						changeToState(state);
+					}
 				}
-			}
-			
-			// Populate the SVG with the given parameters - executed from main buttons
-			function changeToState(newstate) {
-				// Change State to a new Sate and clear SVG
-				state = newstate;
-				clearme();
 				
-				// Get the state for the filter ranges, execute associated method
-				if (state == 1) {
-					d3.select('#infoHeader').text("Years 1961-1980");
-					drawSVG(1961,1980);
-				} else if (state == 2) {
-					d3.select('#infoHeader').text("Years 1981-2000");
-					drawSVG(1981,2000);
-				} else if (state == 3) {
-					d3.select('#infoHeader').text("Years 2001-2021");
-					drawSVG(2001,2021);
-				} else if (state == 4) {
-					d3.select('#infoHeader').text("All years (1961-2021) ");
-					drawSVG(1961,2021);
-			}
-			
-			function drawSVG(bottom, top) {
-				// Variables for the method
-                svgWidth = 500;
-                svgHeight = 500;
-                svgMargin = 50;
-                cxs = d3.scaleLinear().domain([1961,2021]).range([0,svgWidth]);
-                cys = d3.scaleLinear().domain([-7,7]).range([svgHeight,0]);
+				// Populate the SVG with the given parameters - executed from main buttons
+				function changeToState(newstate) {
+					// Change State to a new Sate and clear SVG
+					state = newstate;
+					clearme();
+					
+					// Get the state for the filter ranges, execute associated method
+					if (state == 1) {
+						d3.select('#infoHeader').text("Years 1961-1980");
+						drawSVG(1961,1980);
+					} else if (state == 2) {
+						d3.select('#infoHeader').text("Years 1981-2000");
+						drawSVG(1981,2000);
+					} else if (state == 3) {
+						d3.select('#infoHeader').text("Years 2001-2021");
+						drawSVG(2001,2021);
+					} else if (state == 4) {
+						d3.select('#infoHeader').text("All years (1961-2021) ");
+						drawSVG(1961,2021);
+					}
+				}
 				
-		// Create an SVG to place scatterplot on for data
-                // Convert string to integer using '+' notation on the data element
-               d3.select("svg")
-                        .append("g")
-                        .attr("transform", "translate("+svgMargin+","+svgMargin+")")
-                        .selectAll('scatter-dots')
-			// For each scene, the values should be within the bottom and top defined
-			.data(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
-			.enter()
-			.append('circle')
-                            .attr("cx", function(d) {return cxs(+d.year);})
-                            .attr("cy", function(d) {return cys(+d.value);})
-                            .attr("r", 5)
-			    .attr("fill", "red")
-						.on("mouseover", function(d) {
-							d3.select('#tooltip').transition().duration(200)
-								.style('opacity', 1);
-							d3.select('#tooltip')
-								.style("left", (d3.event.pageX) + "px")             
-								.style("top", (d3.event.pageY - 50) + "px")
-								.html("Year: " + d.year + "<br/>" + "World GDP Growth %: " + d.value);
-						});
-				
-				// create y-axis
-				var xAxis = d3.select("svg").append("g")
-				  .attr("transform","translate("+svgMargin+","+svgMargin+")")
-				  .call(d3.axisLeft(cys)
-						  .tickValues([-7,-6,-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7])
-						  .tickFormat(d3.format(".1f")));
+				function drawSVG(bottom, top) {
+					// Variables for the method
+	                svgWidth = 500;
+	                svgHeight = 500;
+	                svgMargin = 50;
+	                cxs = d3.scaleLinear().domain([1961,2021]).range([0,svgWidth]);
+	                cys = d3.scaleLinear().domain([-7,7]).range([svgHeight,0]);
+					
+			// Create an SVG to place scatterplot on for data
+	                // Convert string to integer using '+' notation on the data element
+	                d3.select("svg")
+	                        .append("g")
+	                        .attr("transform", "translate("+svgMargin+","+svgMargin+")")
+	                        .selectAll('scatter-dots')
+				// For each scene, the values should be within the bottom and top defined
+				.data(data.filter(function(d){return (d.year >= bottom) && (d.year <= top);}))
+				.enter()
+				.append('circle')
+	                            .attr("cx", function(d) {return cxs(+d.year);})
+	                            .attr("cy", function(d) {return cys(+d.value);})
+	                            .attr("r", 5)
+				    .attr("fill", "red")
+							.on("mouseover", function(d) {
+								d3.select('#tooltip').transition().duration(200)
+									.style('opacity', 1);
+								d3.select('#tooltip')
+									.style("left", (d3.event.pageX) + "px")             
+									.style("top", (d3.event.pageY - 50) + "px")
+									.html("Year: " + d.year + "<br/>" + "World GDP Growth %: " + d.value);
+							});
+					
+					// create y-axis
+					d3.select("svg").append("g")
+					  .attr("transform","translate("+svgMargin+","+svgMargin+")")
+					  .call(d3.axisLeft(cys)
+							  .tickValues([-7,-6,-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7])
+							  .tickFormat(d3.format(".1f")));
+	
 
-				// create x-axis
-				var xAxis = d3.select("svg").append("g")
-				  .attr("transform","translate("+svgMargin+","+(svgHeight+svgMargin)+")")
-				  .call(d3.axisBottom(cxs)
-						  .tickValues([1961,1970,1980,1990,2000,2010,2021])
-						  .tickFormat(d3.format(".0f")));
-						  
-				// create x-axis labels
-				d3.select("svg").append("text")
-				  .attr("class", "xlabel")
-				  .attr("text-anchor", "end")
-				  .attr("x", (svgWidth/2) + svgMargin + 10)
-				  .attr("y", svgHeight + svgMargin + 35)
-				  .text("Year");
-				
-				// create y-axis label
-				d3.select("svg").append("text")
-				  .attr("class", "ylabel")
-				  .attr("text-anchor", "end")
-				  .attr("y", 3)
-				  .attr("x", -175)
-				  .attr("dy", ".75em")
-				  .attr("transform", "rotate(-90)")
-				  .text("The World GDP Growth Percentage");  
-				
-			
-				  
-				// Create Annotations
-				const tooltip_annot = [
-					{
-					  note: {
-						label: "Check data values by pointing to the data points",
-						title: "Explore Data Points"
-					  },
-					  x: 400,
-					  y: svgMargin,
+					// create x-axis
+					d3.select("svg").append("g")
+					  .attr("transform","translate("+svgMargin+","+(svgHeight+svgMargin)+")")
+					  .call(d3.axisBottom(cxs)
+							  .tickValues([1961,1970,1980,1990,2000,2010,2021])
+							  .tickFormat(d3.format(".0f")));
+							  
+					// create x-axis labels
+					d3.select("svg").append("text")
+					  .attr("class", "xlabel")
+					  .attr("text-anchor", "end")
+					  .attr("x", (svgWidth/2) + svgMargin + 10)
+					  .attr("y", svgHeight + svgMargin + 35)
+					  .text("Year");
+					
+					// create y-axis label
+					d3.select("svg").append("text")
+					  .attr("class", "ylabel")
+					  .attr("text-anchor", "end")
+					  .attr("y", 3)
+					  .attr("x", -175)
+					  .attr("dy", ".75em")
+					  .attr("transform", "rotate(-90)")
+					  .text("The World GDP Growth Percentage");  
+					  
+					// Create Annotations
+					const tooltip_annot = [
+						{
+						  note: {
+							label: "Check data values by pointing to the data points",
+							title: "Explore Data Points"
+						  },
+						  x: 400,
+						  y: svgMargin,
+						}
+					]
+					
+					const sceneOne_annot = [
+						{
+						  note: {
+							label: "From 1961 to 1980, the economy of the world is fastly growing with the world GDP growth rate remaining around 5% per year",
+							title: "The Economy Of The World Is Rapidly Growing"
+						  },
+						  x: 400,
+						  y: 200,
+						}
+					]
+					
+					const sceneTwo_annot = [
+						{
+						  note: {
+							label: "From 1981 to 2000, the economy growth rate is not as high as before, but the world GDP growth rate is still increaseing per year",
+							title: "The Speed Of World Economy Growth Slowed Down"
+						  },
+						  x: 400,
+						  y: 200,
+						}
+					]
+					
+					const sceneThree_annot = [
+						{
+						  note: {
+							label: "From 2001 to 2021, overall the world GDP growth rate is possible, however, for certain years, the world GDP growth rate is negative",
+							title: "For Certain Years, The World GDP Growth Rate Is Negative"
+						  },
+						  x: 200,
+						  y: 200,
+						}
+					]
+					
+					const sceneFour_annot = [
+						{
+						  note: {
+							label: "Generally, the world GDP growth rate remains around 3% - 5% increase rate every year",
+							title: "The World GDP Growth Rate Change From 1961 To 2021"
+						  },
+						  x: 400,
+						  y: 300,
+						}
+					]
+					
+					// permanent annotation
+					d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
+					
+					// Get the state for the filter ranges, execute associated method
+					if (state == 1) {
+						d3.select("svg").append("g").call(d3.annotation().annotations(sceneOne_annot))
+					} else if (state == 2) {
+						d3.select("svg").append("g").call(d3.annotation().annotations(sceneTwo_annot))
+					} else if (state == 3) {
+						d3.select("svg").append("g").call(d3.annotation().annotations(sceneThree_annot))
+					} else if (state == 4) {
+						d3.select("svg").append("g").call(d3.annotation().annotations(sceneFour_annot))
 					}
-				]
+					  
+					d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
+				}
 				
-				const sceneOne_annot = [
-					{
-					  note: {
-						label: "From 1961 to 1980, the economy of the world is fastly growing with the world GDP growth rate remaining around 5% per year",
-						title: "The Economy Of The World Is Rapidly Growing"
-					  },
-					  x: 400,
-					  y: 200,
-					}
-				]
-				
-				const sceneTwo_annot = [
-					{
-					  note: {
-						label: "From 1981 to 2000, the economy growth rate is not as high as before, but the world GDP growth rate is still increaseing per year",
-						title: "The Speed Of World Economy Growth Slowed Down"
-					  },
-					  x: 400,
-					  y: 200,
-					}
-				]
-				
-				const sceneThree_annot = [
-					{
-					  note: {
-						label: "From 2001 to 2021, overall the world GDP growth rate is possible, however, for certain years, the world GDP growth rate is negative",
-						title: "For Certain Years, The World GDP Growth Rate Is Negative"
-					  },
-					  x: 200,
-					  y: 200,
-					}
-				]
-				
-				const sceneFour_annot = [
-					{
-					  note: {
-						label: "Generally, the world GDP growth rate remains around 3% - 5% increase rate every year",
-						title: "The World GDP Growth Rate Change From 1961 To 2021"
-					  },
-					  x: 400,
-					  y: 300,
-					}
-				]
-				
-				
-				// permanent annotation
-				d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
-				
-				// Get the state for the filter ranges, execute associated method
-				if (state == 1) {
-					d3.select("svg").append("g").call(d3.annotation().annotations(sceneOne_annot))
-				} else if (state == 2) {
-					d3.select("svg").append("g").call(d3.annotation().annotations(sceneTwo_annot))
-				} else if (state == 3) {
-					d3.select("svg").append("g").call(d3.annotation().annotations(sceneThree_annot))
-				} else if (state == 4) {
-					d3.select("svg").append("g").call(d3.annotation().annotations(sceneFour_annot))
-				  
-				d3.select("svg").append("g").call(d3.annotation().annotations(tooltip_annot))
-			}
-			
-			// Function to clear the svg from the page and hide tooltip. This will not remove the svg
-			function clearme() {
-				d3.selectAll("svg > *").remove();
-				d3.select('#tooltip').style('opacity', 0);
-			}
-        </script>
-    </body>
-</html>
+				// Function to clear the svg from the page and hide tooltip. This will not remove the svg
+				function clearme() {
+					d3.selectAll("svg > *").remove();
+					d3.select('#tooltip').style('opacity', 0);
+				}
+	        </script>
+	    </body>
+	</html>
